@@ -13,31 +13,32 @@ export default function RecipeDetails({ recipe }: any) {
   if(!recipe) return <Skeleton></Skeleton>
   const {featuredImage, title, cookingTime, ingredients, method } = recipe.fields;
   return (
-    <div>
-      <div className="banner">
+    <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+      <div className="">
         <Image alt='details' 
           src={'https:' + featuredImage.fields.file.url}
           width={featuredImage.fields.file.details.image.width}
           height={featuredImage.fields.file.details.image.height}
         />
-        <h2>{ title }</h2>
+        <h2 className='text-2xl'>{ title }</h2>
       </div>
-
-      <div className="info">
-        <p>Takes about { cookingTime } mins to cook.</p>
-        <h3>Ingredients:</h3>
-
-        {ingredients.map((ing: any) => (
-          <span key={ing}>{ ing }</span>
-        ))}
-      </div>
-        
-      <div className="method">
+      <div className="w-full text-2xl">
         <h3>Method:</h3>
         <div>{documentToReactComponents(method)}</div>
       </div>
 
-      <style jsx>{`
+      <div className="relative px-0">
+        <p>Takes about { cookingTime } mins to cook.</p>
+        <h3>Ingredients:</h3>
+
+        {ingredients.map((ing: any) => (
+          <span className="after:content-[','] last:after:content-['.']" key={ing}>{ ing }</span>
+        ))}
+      </div>
+        
+      
+
+      {/* <style jsx>{`
         h2,h3 {
           text-transform: uppercase;
         }
@@ -61,7 +62,7 @@ export default function RecipeDetails({ recipe }: any) {
         .info span:last-child::after {
           content: ".";
         }
-      `}</style>
+      `}</style> */}
     </div>
   )
 }

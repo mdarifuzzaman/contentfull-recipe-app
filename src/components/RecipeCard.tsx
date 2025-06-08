@@ -4,22 +4,20 @@ import Link from "next/link";
 export const RecipeCard = ({recipe:{fields}}: any) => {
     const {title, slug, cookingTime, thumbnail} = fields;
     return(
-        <div className="card">
+        <div className="shadow-md p-6 rounded-lg rotate-1">
            <div className="featured">
             <Image src={'https:' + thumbnail.fields.file.url} alt="thumb" width={thumbnail.fields.file.details.image.width} height={thumbnail.fields.file.details.image.height}></Image>
            </div>
-           <div className="content">
+           <div className=" text-black text-2xl">
             <div className="info">
                 <h4>{title}</h4>
                 <p>Takes approx {cookingTime} mins to make</p>
             </div>
-            <div className="actions">
-                <Link href={'/recipes/' + slug} legacyBehavior>
-                    <a>Cook this</a>
-                </Link>
+            <div className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                <Link href={'/recipes/' + slug}>Cook this</Link>
             </div>
            </div>
-           <style jsx>{`
+           {/* <style jsx>{`
             .card {
           transform: rotateZ(-1deg);
         }
@@ -54,7 +52,7 @@ export const RecipeCard = ({recipe:{fields}}: any) => {
           padding: 16px 24px;
           text-decoration: none;
         }
-        `}</style>
+        `}</style> */}
         </div>
     )
 }

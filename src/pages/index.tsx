@@ -18,17 +18,17 @@ export async function getStaticProps(){
 export default function Recipes({recipes}: any) {
   console.log("Recipe", recipes);
   return (
-    <div className="recipe-list">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {recipes.map((recipe: any) => (
         <RecipeCard key={recipe.sys.id} recipe={recipe}></RecipeCard>
       ))}
-      <style jsx>{`
+      {/* <style jsx>{`
         .recipe-list {
           display: grid;
           grid-template-columns: 1fr 1fr;
           grid-gap: 20px 60px;
         }
-      `}</style>
+      `}</style> */}
     </div>
   )
 }
