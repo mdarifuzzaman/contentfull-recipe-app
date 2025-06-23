@@ -7,10 +7,9 @@ export default function Layout({ children }: any) {
         <Link href="/" legacyBehavior>
           <a>
             <h1>
-              <span>Just Add</span>
-              <span>Marmite</span>
+              <span>Stories</span>
             </h1>
-            <h2>Spread The Joy</h2>
+            <h2>Great stories</h2>
           </a>
         </Link>
       </header>
@@ -18,7 +17,7 @@ export default function Layout({ children }: any) {
       <div className="flex-grow container mx-auto p-4">{children}</div>
 
       <footer className="bg-gray-100 text-center text-sm text-gray-600 py-3">
-        <p>Copyright 2021 Just Add Marmite :)</p>
+        <p>Copyright @ Test</p>
       </footer>
     </div>
   );
