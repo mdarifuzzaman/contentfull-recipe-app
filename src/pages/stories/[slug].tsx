@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/Skaleton";
 const client = createClient({
   accessToken: process.env.API_TOKEN || "",
   space: process.env.SPACE_ID || "",
-  host: process.env.CONTENTFUL_HOST || ''
+  host: 'preview.contentful.com'
 });
 
 export default function StoryDetails({ story }: any) {
