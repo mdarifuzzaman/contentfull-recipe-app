@@ -18,16 +18,17 @@ const sitemapApi = async (req: NextApiRequest,
 
     const links = response.items
 		.map((item) => {
-			return `<sitemap>
+			return `<url>
         		<loc>${publicUrl + item.fields?.slug}</loc>
-      		</sitemap>`;
+                <priority>1</priority>
+      		</url>`;
 		})
 		.join('');
 
 	res.setHeader('Content-Type', 'text/xml;charset=utf-8');
 
 	return res.send(`
-        <sitemapindex xmlns="http://sitemaps.org/schemas/sitemap/0.9" encoding="UTF-8">${links}</sitemapindex>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${links}</urlset>
   `);
 }
 
