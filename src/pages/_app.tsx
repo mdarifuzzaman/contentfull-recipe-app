@@ -2,7 +2,6 @@ import '../styles/globals.css'
 import Layout from '../components/Layout'
 
 function MyApp({ Component, pageProps }: any) {
-  console.log(Component);
   return (
     <Layout>
       <Component {...pageProps} />

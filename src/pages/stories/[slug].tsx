@@ -2,6 +2,8 @@ import { createClient } from "contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
 import { Skeleton } from "@/components/Skaleton";
+import { Metadata } from "next";
+import Head from "next/head";
 
 const client = createClient({
   accessToken: process.env.API_TOKEN || "",
@@ -14,8 +16,13 @@ export default function StoryDetails({ story }: any) {
   const { featuredImage, title, readingTime, topics, method } =
     story.item?.fields;
   const { items } = story.relatedItems;
-  console.log("Item", items);
   return (
+     <>
+     <Head>
+      <meta property="og:title" content={title}></meta>
+      <meta property="og:image" content={featuredImage.fields.file.url}></meta>
+      <meta property="og:tags" content={topics}></meta>
+     </Head>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="">
           <Image
@@ -61,34 +68,8 @@ export default function StoryDetails({ story }: any) {
           ))}
         </div>
       </div>
-      {/* <style jsx>{`
-        h2,h3 {
-          text-transform: uppercase;
-        }
-        .banner h2 {
-          margin: 0;
-          background: #fff;
-          display: inline-block;
-          padding: 20px;
-          position: relative;
-          top: -60px;
-          left: -10px;
-          transform: rotateZ(-1deg);
-          box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
-        }
-        .info p {
-          margin: 0;
-        }
-        .info span::after {
-          content: ", ";
-        }
-        .info span:last-child::after {
-          content: ".";
-        }
-      `}</style> */}
-
-      
     </div>
+    </>
   );
 }
 
