@@ -26,7 +26,8 @@ export async function getServerSideProps(context: any){
 
 const client = createClient({
     accessToken: process.env.API_TOKEN || '',
-    space: process.env.SPACE_ID || ''
+    space: process.env.SPACE_ID || '',
+    host: process.env.CONTENTFUL_HOST || ''
   });
 
   const page = parseInt(context.query.page || '1');
