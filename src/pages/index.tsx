@@ -1,34 +1,60 @@
 
-import { RecipeCard } from '@/components/RecipeCard';
-import {createClient } from 'contentful';
+import Pagination from '@/components/Pagination';
+import { StoryCard } from '@/components/StoryCard';
+import {ContentfulClientApi, createClient } from 'contentful';
 
-export async function getStaticProps(){
-  const client = createClient({
-    accessToken: process.env.API_TOKEN || '',
-    space: process.env.SPACE_ID || ''
+export async function getPaginatedRecipes(page = 1, pageSize = 10, client: ContentfulClientApi<undefined>) {
+  const skip = (page - 1) * pageSize;
+
+  const response = await client.getEntries({
+    content_type: 'recipe',
+    skip: skip,
+    limit: pageSize
   });
-  const res = await client.getEntries({ content_type: 'recipe'});
+
+  return {
+    items: response.items,
+    total: response.total,       // total number of entries
+    skip: response.skip,         // how many skipped
+    limit: response.limit,       // how many fetched
+  };
+}
+
+export async function getServerSideProps(context: any){  
+
+  
+
+const client = createClient({
+    accessToken: process.env.API_TOKEN || '',
+    space: process.env.SPACE_ID || '',
+    host: 'preview.contentful.com'    
+  });
+
+  const page = parseInt(context.query.page || '1');
+  const res = await getPaginatedRecipes(page, 6, client)
   return {
     props: {
-      recipes: res.items
+      stories: res.items,
+      total: res.total,
+      skip: res.skip,
+      limit: res.limit      
     }
   }
 }
 
-export default function Recipes({recipes}: any) {
-  console.log("Recipe", recipes);
+export default function Stories({stories, total, limit, skip}: any) { 
   return (
-    <div className="recipe-list">
-      {recipes.map((recipe: any) => (
-        <RecipeCard key={recipe.sys.id} recipe={recipe}></RecipeCard>
-      ))}
-      <style jsx>{`
-        .recipe-list {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-gap: 20px 60px;
-        }
-      `}</style>
+    <div className="max-w-6xl mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {stories.map((story: any) => (
+          <StoryCard key={story.sys.id} story={story}></StoryCard>
+        ))}      
+        
+      </div>
+            {/* Pagination at Bottom */}
+        <div>
+          <Pagination currentPage={1} totalPages={total/6} />
+        </div>
     </div>
   )
 }
